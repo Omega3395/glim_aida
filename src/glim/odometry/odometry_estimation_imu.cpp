@@ -146,7 +146,7 @@ EstimationFrame::ConstPtr OdometryEstimationIMU::insert_frame(const Preprocessed
     }
     init_estimation.reset();
 
-    logger->info("initial IMU state estimation result");
+    logger->info("Initial IMU state");
     logger->info("T_world_imu={}", convert_to_string(init_state->T_world_imu));
     logger->info("v_world_imu={}", convert_to_string(init_state->v_world_imu));
     logger->info("imu_bias={}", convert_to_string(init_state->imu_bias));

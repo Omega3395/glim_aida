@@ -67,6 +67,7 @@ EstimationFrame::ConstPtr NaiveInitialStateEstimation::initial_pose() {
   if (force_init) {
     estimated->v_world_imu = init_v_world_imu;
     estimated->T_world_imu = init_T_world_imu;
+    logger->info("IMU state initialized based on parameters provided");
   } else {
     Eigen::Vector3d acc_dir = sum_acc.normalized();
     if (acc_dir.dot(Eigen::Vector3d::UnitZ()) < 0.999) {
@@ -78,6 +79,7 @@ EstimationFrame::ConstPtr NaiveInitialStateEstimation::initial_pose() {
     } else {
       estimated->T_world_imu = Eigen::Isometry3d::Identity();
     }
+    logger->info("IMU state initialized based on NAIVE logic (aling z axis to gravity axis)");
   }
 
   estimated->T_world_lidar = estimated->T_world_imu * T_lidar_imu.inverse();

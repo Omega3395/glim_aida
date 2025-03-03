@@ -92,7 +92,7 @@ EstimationFrame::ConstPtr LooseInitialStateEstimation::initial_pose() {
     return nullptr;
   }
 
-  logger->info("estimate initial IMU state");
+  logger->info("Estimating initial IMU state");
 
   using gtsam::symbol_shorthand::B;
   using gtsam::symbol_shorthand::V;
