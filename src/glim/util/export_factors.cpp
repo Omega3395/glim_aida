@@ -58,3 +58,5 @@ BOOST_CLASS_EXPORT_GUID(gtsam::ImuFactor, "gtsam::ImuFactor");
 
 BOOST_CLASS_EXPORT_GUID(gtsam_points::LinearDampingFactor, "gtsam_points::LinearDampingFactor");
 BOOST_CLASS_EXPORT_GUID(gtsam_points::RotateVector3Factor, "gtsam_points::RotateVector3Factor");
+
+BOOST_CLASS_EXPORT_GUID(gtsam::GPSFactor, "gtsam::GPSFactor");
