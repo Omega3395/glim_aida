@@ -5,6 +5,9 @@
   //                             : "NAIVE" simply uses the linear acceleration direction as the gravity direction
   // initialization_window_size  : Initialization window size for the "LOOSE" initialization mode
   // init_pose_damping_scale     : Damping scale for the initial pose (to fix the gauge freedom)
+  // init_T_world_imu            : Transformation betweeen imu and world frame, if set allows to skip initial mounting position estimation
+  // init_v_world_imu            : Set to 0 if not provided and "init_T_world_imu" is provided
+  // imu_bias                    : Biases on the 6 axis of the imu, if not provided and "init_T_world_imu" is provided, imu_bias is set to 0 else is estimated
   //
   // --- Optimization params ---
   // smoother_lag                : Fixed-lag smoothing window size [sec]
@@ -41,6 +44,29 @@
     "initialization_mode": "LOOSE",
     "initialization_window_size": 1.0,
     "init_pose_damping_scale": 1e10,
+    // "init_T_world_imu": [
+    //    -1.5,
+    //    0.0,
+    //    0.57,
+    //    6.3e-6,
+    //    0.9999999,
+    //    6.3e-6,
+    //    0.0
+    // ],
+
+    "init_T_world_imu": [
+       -1.5,
+       0.0,
+       0.57,
+       -1,
+       0.0,
+       0.0,
+       0.0
+    ],
+
+    // "init_v_world_imu": [0, 0, 0],
+    // "imu_bias": [0, 0, 0, 0, 0, 0],
+
     // Optimization params
     "smoother_lag": 5.0,
     "use_isam2_dogleg": false,

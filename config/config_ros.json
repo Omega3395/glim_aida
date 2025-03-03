@@ -52,8 +52,8 @@
       "libmemory_monitor.so",
       "libstandard_viewer.so",
       "librviz_viewer.so",
-      // "libgnss_global.so",
-      // "libflat_earther.so"
+      "libgnss_global.so",
+      "libflat_earther.so"
       // "libimu_validator.so"
     ],
     // Topics
