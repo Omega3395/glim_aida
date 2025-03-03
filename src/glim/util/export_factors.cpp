@@ -14,6 +14,9 @@
 #include <gtsam_points/factors/linear_damping_factor.hpp>
 #include <gtsam_points/factors/rotate_vector3_factor.hpp>
 
+#include <gtsam/navigation/GPSFactor.h>
+#include <gtsam/slam/PoseTranslationPrior.h>
+
 BOOST_CLASS_EXPORT_GUID(gtsam::noiseModel::Unit, "gtsam_noiseModel::Unit");
 BOOST_CLASS_EXPORT_GUID(gtsam::noiseModel::Constrained, "gtsam_noiseModel::Constrained");
 BOOST_CLASS_EXPORT_GUID(gtsam::noiseModel::Base, "gtsam::noiseModel::Base");
