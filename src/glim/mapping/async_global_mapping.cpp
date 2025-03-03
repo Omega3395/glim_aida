@@ -72,6 +72,13 @@ std::vector<Eigen::Vector4d> AsyncGlobalMapping::export_points() {
   return points;
 }
 
+std::vector<gtsam::Pose3>  AsyncGlobalMapping::export_graph() {
+  std::lock_guard<std::mutex> lock(global_mapping_mutex);
+  logger->info("exporting graph");
+  auto poses = global_mapping->export_graph();
+  return poses;
+}
+
 void AsyncGlobalMapping::run() {
   auto last_optimization_time = std::chrono::high_resolution_clock::now();
 

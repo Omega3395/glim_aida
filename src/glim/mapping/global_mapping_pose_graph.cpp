@@ -247,6 +247,10 @@ std::vector<Eigen::Vector4d> GlobalMappingPoseGraph::export_points() {
   return {};
 }
 
+std::vector<gtsam::Pose3> GlobalMappingPoseGraph::export_graph() {
+  return {};
+}
+
 void GlobalMappingPoseGraph::insert_submap(int current, const SubMap::Ptr& submap) {
   logger->debug("insert_submap id={}", submap->id);
 

@@ -11,6 +11,7 @@
 #include <gtsam/navigation/ImuBias.h>
 #include <gtsam/nonlinear/Values.h>
 #include <gtsam/nonlinear/NonlinearFactorGraph.h>
+#include <gtsam/slam/PoseTranslationPrior.h>
 
 #include <gtsam_points/config.hpp>
 #include <gtsam_points/types/point_cloud_cpu.hpp>
@@ -571,6 +572,7 @@ void GlobalMapping::save(const std::string& path) {
   logger->info("serializing factor graph to {}/graph.bin", path);
   serializeToBinaryFile(serializable_factors, path + "/graph.bin");
   serializeToBinaryFile(isam2->calculateEstimate(), path + "/values.bin");
+  logger->info("values and factor graph serialized");
 
   std::ofstream ofs(path + "/graph.txt");
   ofs << "num_submaps: " << submaps.size() << std::endl;
@@ -649,6 +651,19 @@ std::vector<Eigen::Vector4d> GlobalMapping::export_points() {
   }
 
   return all_points;
+}
+
+std::vector<gtsam::Pose3> GlobalMapping::export_graph() {
+  std::vector<gtsam::Pose3> poses;
+  // gtsam::Values values = isam2->calculateEstimate();
+  gtsam::Values values = isam2->getLinearizationPoint();
+  for (const auto& key_value : values) {
+    if(gtsam::Symbol(key_value.key).chr() == 'x') { 
+      gtsam::Pose3 pose = values.at<gtsam::Pose3>(key_value.key);
+      poses.push_back(pose);
+    }
+  }
+  return poses;
 }
 
 bool GlobalMapping::load(const std::string& path) {

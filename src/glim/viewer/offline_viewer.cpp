@@ -35,6 +35,7 @@ void OfflineViewer::main_menu() {
   bool start_close_map = false;
   bool start_save_map = false;
   bool start_export_map = false;
+  bool start_export_graph = false;
 
   if (ImGui::BeginMainMenuBar()) {
     if (ImGui::BeginMenu("File")) {
@@ -61,6 +62,10 @@ void OfflineViewer::main_menu() {
 
         if (ImGui::MenuItem("Export Points")) {
           start_export_map = true;
+        }
+
+        if (ImGui::MenuItem("Export Graph")) {
+          start_export_graph = true;
         }
 
         ImGui::EndMenu();
@@ -161,6 +166,19 @@ void OfflineViewer::main_menu() {
   }
   auto export_result = progress_modal->run<bool>("export");
 
+  // export graph
+  if (start_export_graph) {
+    guik::RecentFiles recent_files("offline_viewer_export");
+    const std::string path_graph = pfd::save_file("Select the graph file destination", recent_files.most_recent(), {"CSV", "*.csv"}).result();
+    if (!path_graph.empty()) {
+      recent_files.push(path_graph);
+      progress_modal->open<bool>("export_graph", [this, path_graph](guik::ProgressInterface& progress) { return export_graph(progress, path_graph); });
+    }
+  }
+
+  auto export_graph_result = progress_modal->run<bool>("export_graph");
+
+
   // close map
   if (start_close_map) {
     if (async_global_mapping) {
@@ -216,6 +234,34 @@ bool OfflineViewer::export_map(guik::ProgressInterface& progress, const std::str
   progress.set_text("Writing to file");
   progress.increment();
   glk::save_ply_binary(path, points.data(), points.size());
+
+  return true;
+}
+
+bool OfflineViewer::export_graph(guik::ProgressInterface& progress, const std::string& path) {
+  progress.set_title("Export graph");
+  progress.set_maximum(3);
+  progress.increment();
+  const auto poses = async_global_mapping->export_graph();
+
+  progress.set_text("Writing to file");
+
+  std::ofstream file(path);
+  if (!file.is_open()) {
+    throw std::runtime_error("Unable to open file");
+  }
+
+  // Write poses
+  for (const auto& pose : poses) {
+    const auto& position = pose.translation();
+    const auto& rotation = pose.rotation().toQuaternion();
+    file << position.x() << "," << position.y() << "," << position.z() << ","
+         << rotation.x() << "," << rotation.y() << "," << rotation.z() << "," << rotation.w() << "\n";
+  }
+
+  file.close();
+
+  logger->info("Graph saved to file");
 
   return true;
 }

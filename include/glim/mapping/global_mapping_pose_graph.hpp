@@ -9,6 +9,10 @@
 #include <glim/util/concurrent_vector.hpp>
 #include <glim/mapping/global_mapping_base.hpp>
 
+#include <gtsam/nonlinear/NonlinearFactorGraph.h>
+#include <gtsam/nonlinear/Values.h>
+#include <gtsam/geometry/Pose3.h>
+
 namespace gtsam {
 class Values;
 class NonlinearFactor;
@@ -99,6 +103,7 @@ public:
 
   virtual void save(const std::string& path) override;
   virtual std::vector<Eigen::Vector4d> export_points() override;
+  virtual std::vector<gtsam::Pose3> export_graph() override;
 
 private:
   void insert_submap(int current, const SubMap::Ptr& submap);

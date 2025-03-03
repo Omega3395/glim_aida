@@ -71,6 +71,7 @@ public:
   void save(const std::string& path);
 
   std::vector<Eigen::Vector4d> export_points();
+  std::vector<gtsam::Pose3> export_graph();
 
   std::shared_ptr<glim::GlobalMappingBase> get_global_mapping() {
     std::lock_guard<std::mutex> lock(global_mapping_mutex);

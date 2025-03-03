@@ -6,6 +6,10 @@
 
 #include <glim/mapping/sub_map.hpp>
 
+#include <gtsam/nonlinear/NonlinearFactorGraph.h>
+#include <gtsam/nonlinear/Values.h>
+#include <gtsam/geometry/Pose3.h>
+
 namespace spdlog {
 class logger;
 }
@@ -67,6 +71,8 @@ public:
    * @brief Export all the submap points
    */
   virtual std::vector<Eigen::Vector4d> export_points() { return std::vector<Eigen::Vector4d>(); }
+  
+  virtual std::vector<gtsam::Pose3> export_graph() { return std::vector<gtsam::Pose3>(); }
 
   /**
    * @brief Load a global mapping module from a shared library

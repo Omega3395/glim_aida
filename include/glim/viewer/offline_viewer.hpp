@@ -25,6 +25,7 @@ private:
   std::shared_ptr<GlobalMapping> load_map(guik::ProgressInterface& progress, const std::string& path, std::shared_ptr<GlobalMapping> global_mapping);
   bool save_map(guik::ProgressInterface& progress, const std::string& path);
   bool export_map(guik::ProgressInterface& progress, const std::string& path);
+  bool export_graph(guik::ProgressInterface& progress, const std::string& path);
 
 private:
   std::string init_map_path;
