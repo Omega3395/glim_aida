@@ -49,13 +49,13 @@
     // LiDAR config
     "global_shutter_lidar": false,
     "T_lidar_imu": [
-      0.006,
-      -0.012,
-      0.008,
+      1.5,
       0.0,
+      0.93,
       0.0,
+      1.0,
       0.0,
-      1.0
+      0.0
     ],
     // LiDAR per-point time settings
     "autoconf_perpoint_times": true,
